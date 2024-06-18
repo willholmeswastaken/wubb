@@ -2,19 +2,21 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
+	"github.com/go-chi/chi"
 	log "github.com/sirupsen/logrus"
 	"github.com/willholmeswastaken/wubb/internal/handlers"
-	"net/http"
 )
 
 func main() {
 	log.SetReportCaller(true)
 
-	mux := http.NewServeMux()
+	r := chi.NewRouter()
 
-	handlers.Handler(mux)
+	handlers.Handler(r)
 
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(":8080", r); err != nil {
 		fmt.Println(err)
 	}
 
